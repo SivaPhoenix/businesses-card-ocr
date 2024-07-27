@@ -38,7 +38,7 @@ const App = () => {
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-4">OCR Business Card Reader</h1>
+            <h1 className="text-center text-3xl font-bold mb-4">OCR Business Card Reader</h1>
             <form onSubmit={handleSubmit} className="mb-4">
                 <input type="file" onChange={handleFileChange} className="mb-2" />
                 <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
