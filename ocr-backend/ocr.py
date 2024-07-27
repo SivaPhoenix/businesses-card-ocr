@@ -37,7 +37,7 @@ def parse_text(text):
         'Name': None,
         'Address': None,
         'Phone': None,
-        'Mobile': None,
+        # 'Mobile': None,
         'Company': None,
         'Job': None,
         'Email': None,
@@ -46,7 +46,7 @@ def parse_text(text):
 
     patterns = {
         'Phone': r'(?:(?:\+?\d{1,4}[-.\s])?(?:\(?\d{1,5}\)?[-.\s]?)?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9})',
-        'Mobile': r'(?:(?:\+?\d{1,4}[-.\s])?(?:\(?\d{1,5}\)?[-.\s]?)?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9})',
+        # 'Mobile': r'(?:(?:\+?\d{1,4}[-.\s])?(?:\(?\d{1,5}\)?[-.\s]?)?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9})',
         'Email': r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}',
         'Web': r'(?:http://|https://|www\.)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:/[^\s]*)?',
     }
@@ -56,8 +56,8 @@ def parse_text(text):
         line = line.strip()
         if re.search(patterns['Phone'], line):
             result['Phone'] = line
-        elif re.search(patterns['Mobile'], line):
-            result['Mobile'] = line
+        # elif re.search(patterns['Mobile'], line):
+        #     result['Mobile'] = line
         elif re.search(patterns['Email'], line):
             result['Email'] = line
         elif re.search(patterns['Web'], line):
