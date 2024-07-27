@@ -33,50 +33,46 @@ def extract_text(image):
         sys.exit(1)
 
 def parse_text(text):
-    try:
-        result = {
-            'Name': None,
-            'Address': None,
-            'Phone': None,
-            'Mobile': None,
-            'Company': None,
-            'Job': None,
-            'Email': None,
-            'Web': None
-        }
+    result = {
+        'Name': None,
+        'Address': None,
+        'Phone': None,
+        'Mobile': None,
+        'Company': None,
+        'Job': None,
+        'Email': None,
+        'Web': None
+    }
 
-        patterns = {
-            'Phone': r'Phone|phone|Ph|Tel|tel|Telephone|telephone|T:|^\+?\d[\d -]{8,12}\d$',
-            'Mobile': r'Mobile|mobile|Cell|cell|M:|^\+?\d[\d -]{8,12}\d$',
-            'Email': r'\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b',
-            'Web': r'\b(?:http://|https://|www\.)\S+\b'
-        }
+    patterns = {
+        'Phone': r'(?:(?:\+?\d{1,4}[-.\s])?(?:\(?\d{1,5}\)?[-.\s]?)?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9})',
+        'Mobile': r'(?:(?:\+?\d{1,4}[-.\s])?(?:\(?\d{1,5}\)?[-.\s]?)?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9})',
+        'Email': r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}',
+        'Web': r'(?:http://|https://|www\.)[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:/[^\s]*)?',
+    }
 
-        lines = text.split('\n')
-        for line in lines:
-            if re.search(patterns['Phone'], line, re.I) and result['Phone'] is None:
-                result['Phone'] = line.strip()
-            elif re.search(patterns['Mobile'], line, re.I) and result['Mobile'] is None:
-                result['Mobile'] = line.strip()
-            elif re.search(patterns['Email'], line, re.I) and result['Email'] is None:
-                result['Email'] = line.strip()
-            elif re.search(patterns['Web'], line, re.I) and result['Web'] is None:
-                result['Web'] = line.strip()
-            elif result['Name'] is None:
-                result['Name'] = line.strip()
+    lines = text.split('\n')
+    for line in lines:
+        line = line.strip()
+        if re.search(patterns['Phone'], line):
+            result['Phone'] = line
+        elif re.search(patterns['Mobile'], line):
+            result['Mobile'] = line
+        elif re.search(patterns['Email'], line):
+            result['Email'] = line
+        elif re.search(patterns['Web'], line):
+            result['Web'] = line
+        elif result['Name'] is None:
+            result['Name'] = line
+        elif result['Address'] is None:
+            if result['Company'] is None:
+                result['Address'] = line
             else:
-                if result['Company'] is None:
-                    result['Company'] = line.strip()
-                else:
-                    if result['Address'] is None:
-                        result['Address'] = line.strip()
-                    else:
-                        result['Address'] += f' {line.strip()}'
+                result['Address'] += ' ' + line
+        elif result['Company'] is None:
+            result['Company'] = line
 
-        return result
-    except Exception as e:
-        print(json.dumps({"error": f"Parse text error: {str(e)}"}))
-        sys.exit(1)
+    return result
 
 def main(image_path):
     try:
