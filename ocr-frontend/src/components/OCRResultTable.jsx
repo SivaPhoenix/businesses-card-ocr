@@ -1,7 +1,7 @@
 import React from 'react';
 
 const OCRResultTable = ({ result }) => (
-    <table className="table-auto border-collapse border border-gray-200 mt-4">
+    <table className="table-auto border-collapse border border-gray-200 rounded-sm mt-4">
         <thead>
             <tr>
                 <th className="border border-gray-200 px-4 py-2">Field</th>

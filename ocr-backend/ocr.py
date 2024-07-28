@@ -8,6 +8,7 @@ import numpy as np  # Ensure numpy is imported
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
+# preprocessing the image
 def preprocess_image(image_path):
     try:
         image = cv2.imread(image_path)
@@ -22,7 +23,7 @@ def preprocess_image(image_path):
         sys.exit(1)
 
 
-
+# Extract the test from the image
 def extract_text(image):
     try:
         custom_config = r'--oem 3 --psm 6'
@@ -32,6 +33,7 @@ def extract_text(image):
         print(json.dumps({"error": f"Extract text error: {str(e)}"}))
         sys.exit(1)
 
+# Parsing the text
 def parse_text(text):
     result = {
         'Name': None,
@@ -73,6 +75,8 @@ def parse_text(text):
             result['Company'] = line
 
     return result
+
+#return result, original image and grayscale image
 
 def main(image_path):
     try:
