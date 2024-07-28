@@ -108,6 +108,9 @@ This project is an AI-powered Optical Character Recognition (OCR) application de
 │   ├── package.json
 │   └── ...
 └── README.md
+```
 
-## OUTPUT
-![](./output/output.jpg)
+
+### Output
+
+![images](./output/output.jpg)
